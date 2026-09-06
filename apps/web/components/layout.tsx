@@ -107,6 +107,7 @@ export const Layout = ({ children, title }: PropsWithChildren<Props>) => {
             style={{
               flex: 1,
               overflow: "auto",
+              scrollbarGutter: "stable",
               padding: isMobile
                 ? "var(--mantine-spacing-md)"
                 : "var(--mantine-spacing-lg)"

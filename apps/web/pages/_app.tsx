@@ -1,7 +1,7 @@
 import "nprogress/nprogress.css";
 import "@mantine/core/styles.css";
 import "../styles/globals.css";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, v8CssVariablesResolver } from "@mantine/core";
 import Head from "next/head";
 import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
@@ -60,7 +60,7 @@ const App = ({ Component: C, pageProps }: AppProps) => {
         />
       </Head>
 
-      <MantineProvider theme={theme}>
+      <MantineProvider theme={theme} cssVariablesResolver={v8CssVariablesResolver}>
         {isFirefox ? (
           <Alert
             type="warning"

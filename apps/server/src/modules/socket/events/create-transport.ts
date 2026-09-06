@@ -30,7 +30,6 @@ export const handler: CallbackEvent<"create transport"> = {
         }
       ],
       initialAvailableOutgoingBitrate: 1000000,
-      maxSctpMessageSize: 262144,
       enableUdp: true,
       enableTcp: true,
       preferUdp: true,

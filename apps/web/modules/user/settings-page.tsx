@@ -1,5 +1,4 @@
 import {
-  Box,
   Paper,
   TextInput,
   Checkbox,
@@ -10,6 +9,7 @@ import {
   Text
 } from "@mantine/core";
 import { Layout } from "../../components/layout";
+import { PageContainer } from "../../components/page-container";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { REMEMBER_ME_KEY, useUserStore } from "../../store/user";
@@ -60,13 +60,7 @@ export const SettingsPage: PageComponent = () => {
 
   return (
     <Layout title={"Settings | DropTalk"}>
-      <Box
-        style={{
-          maxWidth: 560,
-          width: "100%",
-          margin: "0 auto"
-        }}
-      >
+      <PageContainer>
         <Title
           order={1}
           fw={700}
@@ -77,7 +71,7 @@ export const SettingsPage: PageComponent = () => {
           Settings
         </Title>
 
-        <Stack gap="lg">
+        <Stack gap="lg" maw={560}>
           <Paper
             p="xl"
             radius="var(--radius-card)"
@@ -186,7 +180,7 @@ export const SettingsPage: PageComponent = () => {
             <DefaultMicSelector />
           </Paper>
         </Stack>
-      </Box>
+      </PageContainer>
     </Layout>
   );
 };

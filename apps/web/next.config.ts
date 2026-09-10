@@ -5,6 +5,7 @@ const config: NextConfig = {
   transpilePackages: ["types"],
   bundlePagesRouterDependencies: true,
   logging: false,
+  poweredByHeader: false,
   experimental: {
     optimizePackageImports: ["@mantine/core", "@mantine/hooks"]
   },

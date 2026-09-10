@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "../../components/layout";
+import { PageContainer } from "../../components/page-container";
 import { Box, Group, Button, Title, Text, Stack } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { CreateRoomModal } from "./create-room-modal";
@@ -15,7 +16,7 @@ export const RoomsPage: PageComponent = () => {
 
   return (
     <Layout title="Rooms | DropTalk">
-      <Box style={{ maxWidth: 900, width: "100%", margin: "0 auto" }}>
+      <PageContainer>
         <Group
           justify="space-between"
           align="flex-end"
@@ -60,7 +61,7 @@ export const RoomsPage: PageComponent = () => {
         >
           <Rooms />
         </Stack>
-      </Box>
+      </PageContainer>
 
       <CreateRoomModal opened={opened} setopened={setopened} />
     </Layout>

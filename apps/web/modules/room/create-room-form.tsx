@@ -47,7 +47,7 @@ export const CreateRoomForm = ({ oncancel }: Props) => {
     }));
   };
 
-  const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onsubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!socket) return toast.error("Web server is down");

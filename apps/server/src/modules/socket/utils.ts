@@ -3,9 +3,8 @@ import { logger } from "./../../lib/logger.js";
 import { SocketEventError } from "./socket-event-error.js";
 import {
   CustomError,
-  JoiValidationError,
   NotAuthorizedError,
-  UnprocessableEntityError
+  ValidationError
 } from "@kamalyb/errors";
 import { s } from "../../utils/schema.js";
 import type { Peer } from "../mediasoup/peer.js";
@@ -17,6 +16,7 @@ import type {
   TypedIO,
   TypedSocket
 } from "./types.js";
+import { JoiValidationError } from "../../utils/error.js";
 
 const overload = `
   (data: object, cb: Function); 
@@ -52,13 +52,13 @@ export const validateargs = (
 
   const set = (p: { [key: string]: unknown }) => {
     if (!isobject(p))
-      throw new UnprocessableEntityError("Expected data to be an object.");
+      throw new ValidationError("Expected data to be an object.");
 
     if (typeof p.__request__ === "undefined")
       return p as EventPayload<ServerEvent>;
 
     if (!Object.prototype.hasOwnProperty.call(p, "payload"))
-      throw new UnprocessableEntityError(
+      throw new ValidationError(
         `Expected payload to be contained in 'payload' property if __request__ (i.e, The request is coming from 'request' function) is present [and must be true].`
       );
 
@@ -75,7 +75,13 @@ export const validateargs = (
       p
     );
 
-    if (error) throw new JoiValidationError(error.details);
+    if (error)
+      throw new ValidationError(
+        error.details.map((error) => ({
+          message: error.message,
+          path: error.path.join(".")
+        }))
+      );
 
     __request__ = value.__request__;
     request_id = value.request_id;
@@ -85,16 +91,16 @@ export const validateargs = (
 
   if (data && cb) {
     if (!isobject(data))
-      throw new UnprocessableEntityError("Expected data to be an object.");
+      throw new ValidationError("Expected data to be an object.");
 
     if (!isfunction(cb))
-      throw new UnprocessableEntityError("Expected callback to be a function.");
+      throw new ValidationError("Expected callback to be a function.");
 
     eventpayload = set(data);
     callbackfn = cb;
   } else if (data && !cb && typeof data !== "function") {
     if (!isobject(data))
-      throw new UnprocessableEntityError("Expected data to be an object.");
+      throw new ValidationError("Expected data to be an object.");
 
     eventpayload = set(data);
     callbackfn = undefined;
@@ -106,7 +112,7 @@ export const validateargs = (
     callbackfn = undefined;
   } else if (!data && cb) {
     if (!isfunction(cb))
-      throw new UnprocessableEntityError("Expected callback to be a function.");
+      throw new ValidationError("Expected callback to be a function.");
 
     eventpayload = undefined;
     callbackfn = cb;

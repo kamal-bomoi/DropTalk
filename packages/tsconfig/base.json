@@ -18,7 +18,6 @@
     "noImplicitOverride": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
     "allowUnreachableCode": false,
     "noImplicitThis": true,
